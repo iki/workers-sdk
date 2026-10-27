@@ -13,3 +13,11 @@ export function isBun(): boolean {
  */
 export const BUN_UNSUPPORTED_MESSAGE =
 	"Wrangler can't forward requests to your Worker under Bun, because Bun's `fetch()` ignores the undici `dispatcher` that Miniflare routes them through (https://github.com/oven-sh/bun/issues/39247). Run this using Node.js.";
+
+/** Local-only opt-in for an independently verified dispatcher-aware fetch. */
+export function isUnsupportedBunFetch(): boolean {
+	return (
+		isBun() &&
+		Reflect.get(globalThis, Symbol.for("wrangler.dispatcherFetch")) !== globalThis.fetch
+	);
+}

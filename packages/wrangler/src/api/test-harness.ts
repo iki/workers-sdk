@@ -28,7 +28,7 @@ import { validateNodeCompatMode } from "../deployment-bundle/node-compat";
 import { getDurableObjectClassNameToUseSQLiteMap } from "../dev/class-names-sqlite";
 import { runWithLogLevel } from "../logger";
 import { requireApiToken, requireAuth } from "../user";
-import { BUN_UNSUPPORTED_MESSAGE, isBun } from "../utils/is-bun";
+import { BUN_UNSUPPORTED_MESSAGE, isUnsupportedBunFetch } from "../utils/is-bun";
 import { DevEnv } from "./startDevWorker/DevEnv";
 import { MultiworkerRuntimeController } from "./startDevWorker/MultiworkerRuntimeController";
 import { NoOpProxyController } from "./startDevWorker/NoOpProxyController";
@@ -979,7 +979,7 @@ export function createTestHarness(options?: TestHarnessOptions): TestHarness {
 		// Miniflare's `dispatchFetch()` routes every request, `getWorker()` ones
 		// included, through an undici dispatcher that Bun's `fetch()` ignores, so
 		// a request can leave for the network. Refuse before sending anything.
-		if (isBun()) {
+		if (isUnsupportedBunFetch()) {
 			throw new UserError(
 				`${BUN_UNSUPPORTED_MESSAGE} \`server.getWorker().getEnv()\` and \`getExport()\` still work under Bun.`,
 				{ telemetryMessage: "test harness dispatch under bun" }
