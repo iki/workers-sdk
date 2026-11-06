@@ -4,7 +4,7 @@ This downstream tooling adapter makes Bun's bare `undici` module expose the inst
 package. It is independent of the global-fetch adapter and Wrangler runtime guard.
 It is not a Bun runtime fix or an upstream-supported configuration.
 
-Tested dependency: Undici 8.12.3; runtime: Bun 1.4.2 on Windows x64.
+Tested dependency: Undici 8.12.4; runtime: Bun 1.4.2 on Windows x64.
 Install that exact dependency in your consuming project, then run from its root:
 
 ```sh
