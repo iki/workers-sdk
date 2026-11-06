@@ -6,12 +6,13 @@ enable remote bindings, or claim official Bun support. Node's behavior is unchan
 Registration is a trusted local configuration contract, not a security boundary.
 Do not register native Bun fetch manually to bypass the check.
 
-Tested versions: Bun 1.4.2, Undici 8.12.3, Wrangler 4.153.0 and Miniflare
-5.20261023.0-beta on Windows x64. The source change is based on upstream commit
-`ec6edddadd8395b4991b23c5300ea68b701ce720`. The published-package diff targets 4.153.0.
+Tested versions: Bun 1.4.2, Undici 8.12.4, Wrangler 4.158.0 and Miniflare
+5.20261104.0-beta on Windows x64. The unchanged source proposal is based on upstream
+commit `ec6edddadd8395b4991b23c5300ea68b701ce720`. The generated published-package
+diff targets 4.158.0; this checkout is not presented as the 4.158.0 source tree.
 
 Install the exact package pins in the consuming project, apply the included
-`wrangler-4.153.0.patch` through your package manager, and run from that project:
+`wrangler-4.158.0.patch` through your package manager, and run from that project:
 
 ```sh
 bun --preload /path/to/workers-sdk/downstream/verified-bun-fetch.mjs node_modules/wrangler/wrangler-dist/cli.js dev
@@ -43,3 +44,10 @@ Upstream context: https://github.com/cloudflare/workers-sdk/pull/15846,
 https://github.com/cloudflare/workers-sdk/issues/15717 and
 https://github.com/oven-sh/bun/issues/39247. We will offer an atomic PR if maintainers
 express interest; their current policy leaves Bun compatibility to Bun.
+
+The maintainer explicitly confirmed keeping this registration in the fork:
+https://github.com/cloudflare/workers-sdk/issues/15717#issuecomment-6467712424.
+New related Bun 1.4.4/Miniflare reports are tracked in
+https://github.com/cloudflare/workers-sdk/issues/16644. Closed PR
+https://github.com/cloudflare/workers-sdk/pull/16645 does not supersede the
+adapter: its bundler interception did not cover external Undici imports.

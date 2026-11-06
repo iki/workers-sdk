@@ -1,8 +1,7 @@
 diff --git a/wrangler-dist/cli.js b/wrangler-dist/cli.js
-index 1b4b22e4..80f820d8 100644
 --- a/wrangler-dist/cli.js
 +++ b/wrangler-dist/cli.js
-@@ -214398,11 +214398,15 @@ var init_https_options = __esm({
+@@ -215447,11 +215447,15 @@
  function isBun() {
    return !!process.versions.bun;
  }
@@ -18,7 +17,7 @@ index 1b4b22e4..80f820d8 100644
      BUN_UNSUPPORTED_MESSAGE = "Wrangler can't forward requests to your Worker under Bun, because Bun's `fetch()` ignores the undici `dispatcher` that Miniflare routes them through (https://github.com/oven-sh/bun/issues/39247). Run this using Node.js.";
    }
  });
-@@ -214490,7 +214494,7 @@ var init_ProxyController = __esm({
+@@ -215539,7 +215543,7 @@
                  // Bun's `fetch()` ignores the undici `dispatcher` that carries
                  // control messages here, so the ProxyWorker would queue every
                  // request forever waiting for a `play` message.
@@ -27,7 +26,7 @@ index 1b4b22e4..80f820d8 100644
                    UNSUPPORTED_RUNTIME_MESSAGE: BUN_UNSUPPORTED_MESSAGE
                  }
                },
-@@ -377678,7 +377682,7 @@ function createTestHarness(options) {
+@@ -371940,7 +371944,7 @@
    }
    __name(getInputUrl, "getInputUrl");
    async function dispatchFetch(miniflare$1, input2, init4, worker, event = "fetch") {
