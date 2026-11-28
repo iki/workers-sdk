@@ -1,0 +1,31 @@
+diff --git a/wrangler-dist/cli.js b/wrangler-dist/cli.js
+--- a/wrangler-dist/cli.js
++++ b/wrangler-dist/cli.js
+@@ -97473,6 +97473,9 @@ var init_https_options = __esmMin((() => {
+ function isBun() {
+ 	return !!process.versions.bun;
+ }
++function isUnsupportedBunFetch() {
++	return isBun() && Reflect.get(globalThis, Symbol.for("wrangler.dispatcherFetch")) !== globalThis.fetch;
++}
+ var BUN_UNSUPPORTED_MESSAGE;
+ var init_is_bun = __esmMin((() => {
+ 	BUN_UNSUPPORTED_MESSAGE = "Wrangler can't forward requests to your Worker under Bun, because Bun's `fetch()` ignores the undici `dispatcher` that Miniflare routes them through (https://github.com/oven-sh/bun/issues/39247). Run this using Node.js.";
+@@ -97543,7 +97546,7 @@ var init_ProxyController = __esmMin((() => {
+ 					} },
+ 					bindings: {
+ 						PROXY_CONTROLLER_AUTH_SECRET: this.secret,
+-						...isBun() && { UNSUPPORTED_RUNTIME_MESSAGE: "Wrangler can't forward requests to your Worker under Bun, because Bun's `fetch()` ignores the undici `dispatcher` that Miniflare routes them through (https://github.com/oven-sh/bun/issues/39247). Run this using Node.js." }
++						...isUnsupportedBunFetch() && { UNSUPPORTED_RUNTIME_MESSAGE: "Wrangler can't forward requests to your Worker under Bun, because Bun's `fetch()` ignores the undici `dispatcher` that Miniflare routes them through (https://github.com/oven-sh/bun/issues/39247). Run this using Node.js." }
+ 					},
+ 					cacheAPI: false,
+ 					unsafeEphemeralDurableObjects: true
+@@ -223884,7 +223887,7 @@ function createTestHarness(options) {
+ 		return input.url;
+ 	}
+ 	async function dispatchFetch(miniflare$2, input, init, worker, event = "fetch") {
+-		if (isBun()) throw new UserError$1(`${BUN_UNSUPPORTED_MESSAGE} \`server.getWorker().getEnv()\` and \`getExport()\` still work under Bun.`, { telemetryMessage: "test harness dispatch under bun" });
++		if (isUnsupportedBunFetch()) throw new UserError$1(`${BUN_UNSUPPORTED_MESSAGE} \`server.getWorker().getEnv()\` and \`getExport()\` still work under Bun.`, { telemetryMessage: "test harness dispatch under bun" });
+ 		let resolvedInput = input;
+ 		if (typeof input === "string" && !URL.canParse(input)) {
+ 			const { url } = await (await resolveSession()).primaryDevEnv.proxy.ready.promise;
